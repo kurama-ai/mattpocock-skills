@@ -182,7 +182,14 @@ finish() {
 # ──────────────────────────────────────────────────────────────────────────
 # STAGES: author this section. One stage() per step the human takes.
 # Replace the example below. Set TOTAL_STAGES to match the stages you write.
+#
+# Keep every stage inside run_wizard and leave the last line of the file as it
+# is. Bash reads a script incrementally, and a wizard waits at prompts for
+# minutes; inside one function the whole file is parsed before the first
+# prompt, so editing the file during a run cannot derail the running copy.
 # ──────────────────────────────────────────────────────────────────────────
+
+run_wizard() {
 
 TOTAL_STAGES=1
 
@@ -202,3 +209,6 @@ set_secret STRIPE_SECRET_KEY "$STRIPE_SECRET_KEY"   # CI needs this one
 # ──────────────────────────────────────────────────────────────────────────
 
 finish
+}
+
+run_wizard "$@"; exit
